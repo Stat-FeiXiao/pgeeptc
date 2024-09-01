@@ -105,15 +105,12 @@ q_scad <-
     
     b1<-rep(0,p)
     
-    for(nm in 1:p){
-      if(beta[nm]>lambda[nm]) b1[nm] <-1
-    }
+    b1[beta>lambda]<-1
     
     b2<-rep(0,p)
-    
-    for(nm in 1:p){
-      if(beta[nm] < lambda[nm]*a) b2[nm] <-1
-    }
+
+    b2[beta<(lambda*a)]<-1
+  
     q<-lambda*(1-b1)+((lambda*a)-beta)*b2/(a-1)*b1
     return(q)
   }
