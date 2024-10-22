@@ -1,6 +1,8 @@
 # pgeeptc
 This is an R package for variable selection in marginal promotion time cure model under clustered failure time via SCAD-based penalized generalized estimating equations (PGEE).
+
 We consider three working correlation matrices in the PGEE: *independent*,  *exchangeable* and  *AR-1*.
+
 We establish a robust sandwich variance estimation formula. In addition, a bootstrap procedure for variance estimation of the covariate coefficients and correlation parameters is also provided.
 
 ## Package description and included main functions
