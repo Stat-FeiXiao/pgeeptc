@@ -12,6 +12,7 @@ library(qifptc)
 ```
 
 The main function included in our R package is *pgeeptc()* and there is also a function *print.pgeeptc()* for printing fitted results with a better presentation. To sum up, they can be called via:
+- **pgeeptc**: fit the models in various ways with synopsis
 ```R
 pgeeptc(formula, id, data, corstr = "independence", stad=TRUE, Ibeta=NULL, Var=FALSE, lambda=NULL, nopindex=NULL, boots=FALSE, nboot=100, QIC =FALSE, 
         nlambda=100, lambda.min.ratio=1e-4, eps = 1e-5, maxiter = 100, tol = 1e-3){
