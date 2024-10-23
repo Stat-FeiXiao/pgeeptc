@@ -1,0 +1,23 @@
+export(BIC)
+export(Loss)
+export(U_H_E_M)
+export(boots)
+export(fitfun)
+export(getlambda)
+export(lambda_IS)
+export(mycor)
+export(pgee)
+export(pgeeptc)
+export(print.pgeeptc)
+export(q_scad)
+
+importFrom("stats", "model.extract", "model.frame", "model.matrix",
+             "pnorm", "sd", "var", "uniroot","optim")
+importFrom("methods", "is")
+importFrom("MASS", "ginv")
+importFrom("Matrix", "bdiag")
+importFrom("glmnet", "cv.glmnet")
+importFrom("R.utils", "withTimeout")
+import("survival")
+
+S3method(print, pgeeptc)
