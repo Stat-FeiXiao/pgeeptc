@@ -24,90 +24,51 @@ pgeeptc(formula, id, data, corstr = "independence", stad=TRUE, Ibeta=NULL, Var=F
 print.pgeeptc(fit)
 ```
 
-## An example using a periodontal disease data is shown below:
+## An example using a tonsil cancer data is shown below:
 
 ```R
-## library
-library(survival)
-library(survminer)
-
 #### Data preparation
-```R
-data(teeth)
-n <- 9
-id1 <- as.numeric(names(table(teeth$id)))[as.numeric(table(teeth$id))==n]
-K <- sum(as.numeric(table(teeth$id))==n)
-Data <- teeth[teeth$id==id1[1],]
-for(i in 2:K){
-  Data <- rbind(Data,teeth[teeth$id==id1[i],]) 
-}
-Data $ id <- rep(1:K,each=n)
-Data$Mg <- Data$x10 # 1 for Mucogingival defect
-Data$Endo <- Data$x16 # 1 for endo Therapy
-Data$Decay <- Data$x21 # 1 for decayed tooth
-Data$Gender <- Data$x49 # 1 for female
+data(tonsil)
+Data <- tonsil
+Data$x1 <- as.numeric( tonsil$Cond == 1)
+Data$x2 <- as.numeric( tonsil$T == 4 )
+Data$x3 <- as.numeric( tonsil$N == 3 )
+Data$x4 <- as.numeric( tonsil$Grade == 1 )
+Data$x5 <- Data$x1 * Data$x2
+Data$x6 <- Data$x1 * Data$x3
+Data$x7 <- Data$x1 * Data$x4
+Data$x8 <- Data$x2 * Data$x3
+Data$x9 <- Data$x2 * Data$x4
+Data$x10 <- Data$x3 * Data$x4
+Data$id <- tonsil$Inst
+Data$time <- tonsil$Time
+Data$event <- tonsil$Status
 ```
 
-## plot a figure to show the existence of a cure fraction
+### Variable selection for the marginal semi-parametric promotion time cure model using PGEE method
+- GEE without penalty
 ```R
-ggsurvplot(survival::survfit(survival::Surv(time, event) ~ Gender, data = Data), 
-           ylim = c(0.6,1),
-           ylab = "Survival Probability", xlab = "Survival Time (in Years)", 
-           censor.shape="+",
-           legend.title = "Gender",
-           legend.labs = c("Male","Female")
-)
-```
-![Teeth_KM_Gender](https://github.com/user-attachments/assets/e5fd1984-d3c6-4b55-a40b-43d631ec7b29)
+set.seed(123)
 
+GEEex_fit <- pgeeptc(formula=Surv(time,event)~x1+x2+x3+x4+x5+x6+x7+x8+x9+x10,id=Data$id, 
+              data=Data, corstr ='exchangeable',stad=T, Ibeta=NULL, Var=T, lambda=0, 
+              nopindex=NULL, boots=T, nboot=100, QIC =T, nlambda=100, lambda.min.ratio=1e-8,eps = 1e-6, maxiter = 100, tol = 1e-3)
 
-#### Fit the marginal semi-parametric promotion time cure model using GEE method
-- exchangeable correlation
-```R
-teeth.gee.ex <- qifptc(
-        formula = Surv(time, event) ~ Gender + Mg + Endo + Decay, 
-        id = Data$id, Var = TRUE, stad=TRUE, method = "GEE", corstr="exchangeable", data = Data
-)
-print.qifptc(teeth.gee.ex)
+print.pgeeptc(GEEex_fit)
 ```
-- AR(1) correlation
+- PGEE with exchangeable working correlation matrix
 ```R
-teeth.gee.ar1 <- qifptc(
-        formula = Surv(time, event) ~ Gender + Mg + Endo + Decay, 
-        id = Data$id, Var = TRUE, stad=TRUE, method = "GEE", corstr="AR1", data = Data
-)
-print.qifptc(teeth.gee.ar1)
+PGEEex_fit <- pgeeptc(formula=Surv(time,event)~x1+x2+x3+x4+x5+x6+x7+x8+x9+x10,id=Data$id, 
+                      data=Data, corstr ='exchangeable',stad=T, Ibeta=NULL, Var=T, lambda=NULL, 
+                      nopindex=NULL, boots=T, nboot=100, QIC =T, nlambda=100, lambda.min.ratio=1e-8,eps = 1e-6, maxiter = 100, tol = 1e-3)
+
+print.pgeeptc(PGEEex_fit)
 ```
-- independence correlation
+- PGEE with independent working correlation matrix
 ```R
-teeth.gee.ind <- qifptc(
-        formula = Surv(time, event) ~ Gender + Mg + Endo + Decay, 
-        id = Data$id, Var = TRUE, stad=TRUE, method = "GEE", corstr="independence", data = Data
-)
-print.qifptc(teeth.gee.ind)
-```
-#### Fit the marginal semi-parametric promotion time cure model using QIF method
-- exchangeable correlation
-```R
-teeth.qif.ex <- qifptc(
-        formula = Surv(time, event) ~ Gender + Mg + Endo + Decay, 
-        id = Data$id, Var = TRUE, stad=TRUE, method = "QIF", corstr="exchangeable", data = Data
-)
-print.qifptc(teeth.qif.ex)
-```
-- AR(1) correlation
-```R
-teeth.qif.ar1 <- qifptc(
-        formula = Surv(time, event) ~ Gender + Mg + Endo + Decay, 
-        id = Data$id, Var = TRUE, stad=TRUE, method = "QIF", corstr="AR1", data = Data
-)
-print.qifptc(teeth.qif.ar1)
-```
-- independence correlation
-```R
-teeth.qif.ind <- qifptc(
-        formula = Surv(time, event) ~ Gender + Mg + Endo + Decay, 
-        id = Data$id, Var = TRUE, stad=TRUE, method = "QIF", corstr="independence", data = Data
-)
-print.qifptc(teeth.qif.ind)
+PGEEind_fit <- pgeeptc(formula=Surv(time,event)~x1+x2+x3+x4+x5+x6+x7+x8+x9+x10,id=Data$id,
+                       data=Data, corstr ='independence',stad=T, Ibeta=NULL, Var=T, lambda=NULL, 
+                       nopindex=NULL, boots=FALSE, nboot=100, QIC =T, nlambda=100, lambda.min.ratio=1e-8,eps = 1e-6, maxiter = 100, tol = 1e-3)
+
+print.pgeeptc(PGEEind_fit)
 ```
