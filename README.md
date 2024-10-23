@@ -10,7 +10,7 @@ We establish a robust sandwich variance estimation formula. In addition, a boots
 Installation of this package can be done locally after downloading the package manually from this github website. We will also upload this package to the Comprehensive R Archive Network (CRAN) so that it can be downloaded as a standard R package. Currently, it can be loaded using R command
 ```R
 devtools::install_github("Stat-FeiXiao/pgeeptc")
-library(qifptc)
+library(pgeeptc)
 ```
 
 The main function included in our R package is *pgeeptc()* and there is also a function *print.pgeeptc()* for printing fitted results with a better presentation. To sum up, they can be called via:
