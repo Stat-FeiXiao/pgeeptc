@@ -58,6 +58,7 @@ mycor <- function(Status, id, X, beta_new, Time, corstr) {
   
   if (corstr=="independence"){
     rho<-0
+    pphi<-1
   }else if(corstr=="exchangeable"){
     
     for (i in 1:K) {
