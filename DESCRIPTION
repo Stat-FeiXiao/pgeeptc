@@ -1,0 +1,34 @@
+Package: pgeeptc
+Type: Package        
+Title: Variable selection in marginal promotion time cure model via penalized generalized estimating equations
+Version: 1.0.1
+Authors@R: 
+  c(
+  person(given = "Fei",
+         family = "Xiao",
+         role = c("aut", "cre"),
+         email = "24gy8@queensu.ca"),
+  person(given = "Yingwei", 
+         family = "Peng", 
+         role = c("aut")  
+         ), 
+  person(given = "Yi", 
+         family = "Niu", 
+         role = c("aut")  
+         )
+  )
+Author: Fei Xiao [aut, cre],
+  Yingwei Peng [aut],
+  Yi Niu [aut]
+Maintainer: Fei Xiao <24gy8@queensu.ca>
+Description: An R package for variable selection in marginal promotion time cure model under clustered failure time via SCAD-based penalized generalized estimating equations.
+License: GPL (>= 2)
+Imports: Matrix, MASS, R.utils, glmnet, methods
+Depends: 
+    R (>= 2.10),
+    survival
+Encoding: UTF-8
+LazyData: TRUE
+NeedsCompilation: no
+RoxygenNote: 7.3.2
+URL: http://github.com/Stat-FeiXiao/pgeeptc
