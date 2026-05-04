@@ -1,7 +1,7 @@
 Package: pgeeptc
 Type: Package        
 Title: Variable selection in marginal promotion time cure model via penalized generalized estimating equations
-Version: 1.0.1
+Version: 1.0
 Authors@R: 
   c(
   person(given = "Fei",
