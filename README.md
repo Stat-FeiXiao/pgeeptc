@@ -24,7 +24,7 @@ pgeeptc(formula, id, data, corstr = "independence", stad=TRUE, Ibeta=NULL, Var=F
 print.pgeeptc(fit)
 ```
 
-## An example using a tonsil cancer data is shown below:
+## An example using a periodontal disease data is shown below:
 
 ```R
 #### Data preparation
